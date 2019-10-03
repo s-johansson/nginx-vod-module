@@ -2,7 +2,7 @@ FROM alpine:3.9 AS base_image
 
 FROM base_image AS build
 
-RUN apk add --no-cache curl build-base openssl openssl-dev zlib-dev linux-headers pcre-dev ffmpeg ffmpeg-dev
+RUN apk add --no-cache curl build-base openssl openssl-dev zlib-dev linux-headers pcre-dev ffmpeg ffmpeg-dev libxml2-dev
 RUN mkdir nginx nginx-vod-module
 
 ENV NGINX_VERSION 1.17.4
@@ -25,7 +25,8 @@ RUN make install
 RUN rm -rf /usr/local/nginx/html /usr/local/nginx/conf/*.default
 
 FROM base_image
-RUN apk add --no-cache ca-certificates openssl pcre zlib ffmpeg
+RUN apk add --no-cache ca-certificates openssl pcre zlib ffmpeg libxml2
 COPY --from=build /usr/local/nginx /usr/local/nginx
+ADD nginx-vod.conf /usr/local/nginx/conf/nginx.conf
 ENTRYPOINT ["/usr/local/nginx/sbin/nginx"]
 CMD ["-g", "daemon off;"]
