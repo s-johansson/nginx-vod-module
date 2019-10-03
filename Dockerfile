@@ -9,11 +9,13 @@ ENV NGINX_VERSION 1.17.4
 ENV VOD_MODULE_VERSION 1.25
 
 RUN curl -sL https://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz | tar -C /nginx --strip 1 -xz
-RUN curl -sL https://github.com/kaltura/nginx-vod-module/archive/${VOD_MODULE_VERSION}.tar.gz | tar -C /nginx-vod-module --strip 1 -xz
+# RUN curl -sL https://github.com/kaltura/nginx-vod-module/archive/${VOD_MODULE_VERSION}.tar.gz | tar -C /nginx-vod-module --strip 1 -xz
+
+ADD . /nginx-vod-module
 
 WORKDIR /nginx
 RUN ./configure --prefix=/usr/local/nginx \
-    --add-module=../nginx-vod-module \
+    --add-module=/nginx-vod-module \
     --with-http_ssl_module \
     --with-file-aio \
     --with-threads \
