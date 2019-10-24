@@ -1,0 +1,10 @@
+version: "3.6"
+
+services:
+  nginx:
+    image: nginx-vod:1.0.0
+    ports:
+      - 8080:80
+    volumes:
+      - ${PWD}/mnt-data:/mnt/data
+      - ${PWD}/nginx-vod.conf:/usr/local/nginx/conf/nginx.conf
