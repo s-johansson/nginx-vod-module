@@ -46,6 +46,7 @@ RUN apk add --no-cache \
     ffmpeg \
     libxml2 \
     lua \
+    lua-dev \
     luajit \
     openssl \
     pcre \
