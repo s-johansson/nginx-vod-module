@@ -11,7 +11,7 @@ DOCKER_IMG_NAME?=media-cloud-ai/nginx_vod_module
 ifneq ($(DOCKER_REGISTRY), ) 
 	DOCKER_IMG_NAME := /${DOCKER_IMG_NAME}
 endif
-VERSION=nginx-1.17.4-vod-1.25
+VERSION=nginx-1.21.2-vod-1.29
 
 docker-build:
 	@docker build -t ${DOCKER_REGISTRY}${DOCKER_IMG_NAME}:${VERSION} .
