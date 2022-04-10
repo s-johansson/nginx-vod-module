@@ -6,6 +6,8 @@ ENV NGINX_VERSION 1.21.2
 ENV VOD_MODULE_VERSION 1.29
 ENV LUA_NGINX_MODULE_VERSION 0.10.20
 ENV NGX_DEVEL_KIT_VERSION 0.3.1
+ENV AKAMAI_TOKEN_VERSION 1.1
+ENV NGINX_SECURE_TOKEN_VERSION 1.4
 # fix for build lua module to locate luajit.h
 # ENV C_INCLUDE_PATH /usr/include/luajit-2.1/
 ENV LUAJIT_INC /usr/include/luajit-2.1/
@@ -28,15 +30,19 @@ RUN apk add --no-cache \
     openssl-dev \
     zlib-dev && \
     \
-    mkdir /nginx_lua_module /nginx_devel_kit && \
+    mkdir /nginx_lua_module /nginx_devel_kit /nginx-akamai-token-validate-module /nginx-secure-token-module && \
     curl -sL https://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz | tar -C /nginx --strip 1 -xz && \
     curl -sL https://github.com/openresty/lua-nginx-module/archive/v${LUA_NGINX_MODULE_VERSION}.tar.gz | tar -C /nginx_lua_module --strip 1 -xz && \
     curl -sL https://github.com/simplresty/ngx_devel_kit/archive/v${NGX_DEVEL_KIT_VERSION}.tar.gz | tar -C /nginx_devel_kit --strip 1 -xz && \
+    curl -sL https://github.com/kaltura/nginx-akamai-token-validate-module/archive/${AKAMAI_TOKEN_VERSION}.tar.gz | tar -C /nginx-akamai-token-validate-module --strip 1 -xz &&\
+    curl -sL https://github.com/kaltura/nginx-secure-token-module/archive/${NGINX_SECURE_TOKEN_VERSION}.tar.gz | tar -C /nginx-secure-token-module --strip 1 -xz &&\
     \
     ./configure --prefix=/usr/local/nginx \
     --add-module=/nginx_vod_module \
     --add-module=/nginx_lua_module \
     --add-module=/nginx_devel_kit \
+    --add-module=/nginx-akamai-token-validate-module \
+    --add-module=/nginx-secure-token-module \
     --with-http_ssl_module \
     --with-file-aio \
     --with-threads \
