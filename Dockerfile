@@ -1,10 +1,10 @@
-FROM alpine:3.10 AS base_image
+FROM alpine:3.15.4 AS base_image
 
 FROM base_image AS build
 
 ENV NGINX_VERSION 1.21.2
 ENV VOD_MODULE_VERSION 1.29
-ENV LUA_NGINX_MODULE_VERSION 0.10.15
+ENV LUA_NGINX_MODULE_VERSION 0.10.20
 ENV NGX_DEVEL_KIT_VERSION 0.3.1
 # fix for build lua module to locate luajit.h
 # ENV C_INCLUDE_PATH /usr/include/luajit-2.1/
@@ -61,7 +61,7 @@ RUN apk add --no-cache \
     zlib && \
     \
     mkdir /lua_resty_core && \
-    curl -sL https://github.com/openresty/lua-resty-core/archive/v0.1.17.tar.gz | tar -C /lua_resty_core --strip 1 -xz && \
+    curl -sL https://github.com/openresty/lua-resty-core/archive/v0.1.22.tar.gz | tar -C /lua_resty_core --strip 1 -xz && \
     cd /lua_resty_core && \
     make install
 
