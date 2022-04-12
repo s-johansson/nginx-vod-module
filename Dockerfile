@@ -72,6 +72,7 @@ RUN apk add --no-cache \
     make install
 
 COPY --from=build /usr/local/nginx /usr/local/nginx
-ADD nginx-vod.conf /usr/local/nginx/conf/nginx.conf
+# default nginx config, could be overwriten with specific bind mount
+ADD nginx_conf/nginx-vod.conf /usr/local/nginx/conf/nginx.conf
 ENTRYPOINT ["/usr/local/nginx/sbin/nginx"]
 CMD ["-g", "daemon off;"]
